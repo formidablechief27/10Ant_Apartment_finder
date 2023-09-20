@@ -16,13 +16,16 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         return token
 
-class ApartmentSerializer(serializers.HyperlinkedModelSerializer):
+class ApartmentSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.email')
+
     class Meta:
         model = Apartment
-        fields = ['title', 'address', 'city', 'price', 'list_date']
+        lookup_field = "id"
+        fields = "__all__"
 
 
-class UserSerializer(serializers.ModelSerializer):
+class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
@@ -35,3 +38,12 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+    
+
+class CustomUserListDetailSerializer(serializers.ModelSerializer):
+    apartments = serializers.PrimaryKeyRelatedField(many=True, queryset=Apartment.objects.all())
+
+    class Meta:
+        model = CustomUser
+        fields = ["id", "email", "username", "apartments"]
+
