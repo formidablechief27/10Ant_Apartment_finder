@@ -62,6 +62,8 @@ CORS_ORIGIN_WHITELIST = [
 
 ROOT_URLCONF = 'Tenant.urls'
 
+AUTH_USER_MODEL = 'Room.CustomUser'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -141,4 +143,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
+}
+
+SIMPLE_JWT = {
+  "TOKEN_OBTAIN_SERIALIZER": "Room.serializers.MyTokenObtainPairSerializer",
 }
