@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import (
 from . import views
 
 router = routers.DefaultRouter()
-router.register(r'api/room', views.ApartmentViewSet)
+router.register(r'api/room', views.ApartmentViewSet, basename='room')
 
 urlpatterns = [
     path("", include(router.urls)),

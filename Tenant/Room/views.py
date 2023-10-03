@@ -37,8 +37,9 @@ class ApartmentViewSet(viewsets.ModelViewSet):
     serializer_class = ApartmentSerializer
 
     def perform_create(self, serializer):
-        print("User" + self.request.user.username)
-        serializer.save(owner=self.request.user)
+        print("User " + self.request.data["owner_pkey"])
+        user = CustomUser.objects.get(pk = self.request.data["owner_pkey"])
+        serializer.save(owner=user)
         print("end breakpoint")
 
 
